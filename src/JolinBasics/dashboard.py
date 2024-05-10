@@ -2,7 +2,7 @@
 # v0.19.28
 
 #> [frontmatter]
-#> image = "https://private-user-images.githubusercontent.com/4255480/329548277-7469e153-3094-4e49-b825-d04f0023ede0.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTUzMzcwMjksIm5iZiI6MTcxNTMzNjcyOSwicGF0aCI6Ii80MjU1NDgwLzMyOTU0ODI3Ny03NDY5ZTE1My0zMDk0LTRlNDktYjgyNS1kMDRmMDAyM2VkZTAuanBnP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MDUxMCUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDA1MTBUMTAyNTI5WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9MTIzNWQ1YjYxNjE1ZmZmZTMwNGRmYzA3NmQ0ZDEzNGZkZWU1MWZiODJjNmE4NGE0YjIyNTQ1ODAwOWJmZmJlNiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmYWN0b3JfaWQ9MCZrZXlfaWQ9MCZyZXBvX2lkPTAifQ.2CY4sq7mpYBoK1mBGwikge-Bbz9duEJ-_jxzjtWRMKc"
+#> image = "https://raw.githubusercontent.com/jolin-io/JolinFeatured/main/src/JolinBasics/dashboard.jpg"
 #> order = "1"
 #> tags = ["basic", "classic"]
 #> title = "Dashboard"
@@ -11,7 +11,6 @@
 #>     [[frontmatter.author]]
 #>     name = "Jolin.io"
 #>     url = "https://github.com/jolin-io"
-
 
 # Welcome to your Python reactive notebook.
 from juliacall import Main as _jl

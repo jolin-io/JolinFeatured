@@ -1,5 +1,17 @@
 ### A Pluto.jl notebook ###
 # v0.19.28
+
+#> [frontmatter]
+#> image = "https://raw.githubusercontent.com/jolin-io/JolinFeatured/main/src/JolinBasics/stream.jpg"
+#> order = "2"
+#> tags = ["basic", "classic"]
+#> title = "Online Analytics"
+#> description = "A reactive notebook is a streaming process."
+#> 
+#>     [[frontmatter.author]]
+#>     name = "Jolin.io"
+#>     url = "https://github.com/jolin-io"
+
 # Welcome to your R reactive notebook.
 library(JuliaCall)
 julia_setup(installJulia=TRUE)
