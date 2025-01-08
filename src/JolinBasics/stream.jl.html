@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+
+    <title>Online Analytics</title>
+<meta name="description" content='A reactive notebook is a streaming process.'>
+<meta property="og:article:tag" content='jolin'>
+<meta property='og:image' content='https://raw.githubusercontent.com/jolin-io/JolinFeatured/main/src/JolinBasics/stream.jpg'>
+<meta property='og:title' content='Online Analytics'>
+<meta property='og:type' content='article'>
+<meta property='og:description' content='A reactive notebook is a streaming process.'>
+
+<meta name="pluto-insertion-spot-meta">
+
+
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2a2928">
+    <meta name="color-scheme" content="light dark">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/img/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/img/favicon-96x96.png" />
+    <link rel="pluto-logo-big" href="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/img/logo.svg" />
+    <link rel="pluto-logo-small" href="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/img/favicon_unsaturated.svg" />
+
+    <script defer>
+        console.log(
+            "Pluto.jl, by Fons van der Plas (https://github.com/fonsp), Mikołaj Bochenski (https://github.com/malyvsen), Michiel Dral (https://github.com/dralletje) and friends 🌈"
+        )
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/stdlib@3.3.1/dist/stdlib.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/iframe-resizer@4.2.11/js/iframeResizer.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.1.0/ansi_up.min.js" defer></script>
+    <script type="importmap">
+        {
+          "imports": {
+            "@mui/icons-material": "https://esm.sh/@mui/icons-material@5.15.15?dev&external=react,react-dom&target=es2020&keep-names",
+            "@mui/material": "https://esm.sh/@mui/material@5.15.15?dev&external=react,react-dom&target=es2020",
+            "htm": "https://esm.sh/htm@3.1.1",
+            "preact": "https://esm.sh/preact@10.13.2?target=es2020",
+            "preact/hooks": "https://esm.sh/preact@10.13.2/hooks?target=es2020",
+            "react": "https://esm.sh/preact@10.13.2/compat?target=es2020",
+            "react-dom": "https://esm.sh/preact@10.13.2/compat?target=es2020",
+            "react/jsx-runtime": "https://esm.sh/preact@10.13.2/jsx-runtime?target=es2020",
+            "seamless-scroll-polyfill": "https://esm.sh/seamless-scroll-polyfill@2.1.8/lib/polyfill.js",
+            "twind": "https://esm.sh/twind@0.16.19",
+            "twind/shim": "https://esm.sh/twind@0.16.19/shim"
+          }
+        }
+    </script>
+
+    <!-- This doesn't do anything unless activated, and it makes sure parcel bundles this -->
+    <script id="iframe-resizer-content-window-script" src="https://cdn.jsdelivr.net/npm/iframe-resizer@4.2.11/js/iframeResizer.contentWindow.min.js" crossorigin="anonymous" defer></script>
+
+    <!-- ipwidget support - it is really hard to find a good place to load this
+         like when loaded as a cell, the order between cells does not seem defined, so that this dependency might not yet be loaded when the widgets load
+         hence we put it here
+         of course it would be nice to have it somehow being linked to specific initializations of PythonCall, but it is also not too large, so that we simply include it for now -->
+    <!-- Load RequireJS, used by the IPywidgets for dependency management -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"
+      integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA="
+      crossorigin="anonymous"
+      defer>
+    </script>
+
+    <!-- Load IPywidgets bundle for embedding. -->
+    <script
+      data-jupyter-widgets-cdn="https://unpkg.com/"
+      data-jupyter-widgets-cdn-only
+      src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@*/dist/embed-amd.js"
+      crossorigin="anonymous"
+      defer>
+    </script>
+
+    <!-- Patch IPywidgets WidgetView to trigger Pluto events. -->
+    <script>
+      // DOMContentLoaded is triggered right after all "defer" scripts have been run
+      document.addEventListener("DOMContentLoaded", function () {
+        window.require(["@jupyter-widgets/base"], (function(b) {
+          b.WidgetView.prototype.touch = function(){
+            let div = this.el.closest('div[type="application/vnd.jupyter.widget-view+div"]')
+            if ((div != null) && (this.model._buffered_state_diff?.value != null)){
+              div.value = this.model._buffered_state_diff.value
+              div.dispatchEvent(new CustomEvent('input'))
+            }
+          }
+        }))
+      });
+    </script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/editor.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/hide-ui.css" type="text/css" media="all" data-pluto-file="hide-ui" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/binder.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/treeview.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/highlightjs.css" type="text/css">
+
+    <script data-pluto-file="launch-parameters">
+window.pluto_notebook_id = undefined;
+window.pluto_isolated_cell_ids = undefined;
+window.pluto_isolated_cells = undefined;
+window.pluto_notebookfile = "stream.jl";
+window.pluto_disable_ui = true;
+window.pluto_slider_server_url = undefined;
+window.pluto_binder_url = undefined;
+window.pluto_statefile = "stream.jl.plutostate";
+window.pluto_preamble_html = undefined;
+</script>
+
+<meta name="pluto-insertion-spot-parameters">
+
+    <script src="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/editor.js" type="module" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.19.42/frontend/warn_old_browsers.js"></script>
+
+    <!-- This script will be enabled by JS after the notebook has initialized to prevent taking up bandwidth during the initial load. -->
+    <script type="text/javascript" id="MathJax-script" integrity="sha384-4kE/rQ11E8xT9QgrCBTyvenkuPfQo8rXYQvJZuMgxyPOoUfpatjQPlgdv6V5yhUK" crossorigin="anonymous" not-the-src-yet="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg-full.js" async></script>
+    
+    <!-- Support tailwind classes for easy creation of custom components and html -->
+    <!-- https://twind.style/installation -->
+    <!-- <script src="https://cdn.twind.style" crossorigin></script>
+    <script>
+        twind.install({
+            // normally preflight mode tries to turn of user agent style, i.e. the default browser styles, however Pluto relies on it
+            preflight: false,
+            theme: {
+                extend: {
+                  fontFamily: {
+                    sans: ['Nunito', "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Roboto", "Arial", "sans-serif"],
+                    title: ["Comfortaa", "Nunito", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Roboto", "Arial", "sans-serif"]
+                  },
+                  colors: {
+                    'purple-julia': '#9558B2',
+                    'green-julia': '#389826',
+                    'red-julia': '#CB3C33',
+                    'blue-julia': '#4063D8'
+                  },
+                },
+              },
+        })
+    </script> -->
+
+    
+<link rel="preload" as="fetch" href="stream.jl.plutostate" crossorigin>
+
+<meta name="pluto-insertion-spot-preload">
+
+</head>
+
+<body class="loading no-MαθJax">
+    <div style="display: flex; min-height: 100vh;">
+        <pluto-editor class="fullscreen">
+            <progress style="filter: grayscale(1)" class="statefile-fetch-progress delete-me-when-live" max="100"></progress>
+        </pluto-editor>
+    </div>
+</body>
+
+</html>
