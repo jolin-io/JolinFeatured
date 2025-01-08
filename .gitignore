@@ -1,5 +1,7 @@
 
 pluto_state_cache/
+export/
 output/
 .vscode/
 .DS_Store
+.CondaPkg

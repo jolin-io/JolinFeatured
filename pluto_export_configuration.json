@@ -1,0 +1,9 @@
+{
+    "collections": [
+        {
+            "title": "Jolin Notebooks",
+            "description": "Notebooks curated by Jolin.io giving you the easiest start possible. In Python, R, or Julia.",
+            "tags": ["jolin"]
+        }
+    ]   
+}
