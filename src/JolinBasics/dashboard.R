@@ -18,7 +18,7 @@ julia_setup(installJulia=TRUE)
 library(zeallot)  # for deconstructing `c(a, b) %<-% list(1, 2)`
 destructure.JuliaTuple <- function(x) lapply(x, identity)
 # define key helpers
-c(MD, HTML, format_html, viewof) %<-% julia_eval("using Jolin; MD, Jolin._HTML, format_html, viewof")
+c(MD, HTML, format_html, viewof) %<-% julia_eval("using Jolin; MD, s -> HTML(s), format_html, viewof")
 
 # ╔═╡ dbc61ab1-3375-47c2-9f57-0e13e179f38d
 library(plotly)
